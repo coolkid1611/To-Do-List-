@@ -52,3 +52,51 @@ function showTask(){
     listContainer.innerHTML = localStorage.getItem("data");
 }
 showTask();
+
+
+
+
+// Get the theme switch element
+const darkModeSwitch = document.getElementById("dark-mode-switch");
+const body = document.body;
+const container = document.querySelector(".container");
+const todoApp = document.querySelector(".todo-app");
+const button = document.querySelector("button");
+const listItems = document.querySelectorAll("ul li");
+
+// Function to toggle dark mode based on switch
+function toggleDarkMode() {
+    // Add or remove dark mode class on all elements
+    body.classList.toggle("dark-mode");
+    container.classList.toggle("dark-mode");
+    todoApp.classList.toggle("dark-mode");
+    button.classList.toggle("dark-mode");
+    listItems.forEach((item) => {
+        item.classList.toggle("dark-mode");
+    });
+
+    // Save user's dark mode preference
+    if (body.classList.contains("dark-mode")) {
+        localStorage.setItem("darkMode", "enabled");
+    } else {
+        localStorage.setItem("darkMode", "disabled");
+    }
+}
+
+// Check for user's theme preference on page load
+window.onload = () => {
+    if (localStorage.getItem("darkMode") === "enabled") {
+        // Enable dark mode
+        body.classList.add("dark-mode");
+        container.classList.add("dark-mode");
+        todoApp.classList.add("dark-mode");
+        button.classList.add("dark-mode");
+        listItems.forEach((item) => {
+            item.classList.add("dark-mode");
+        });
+        darkModeSwitch.checked = true; // Set the switch to "checked"
+    }
+};
+
+// Event listener for the switch
+darkModeSwitch.addEventListener("change", toggleDarkMode);
